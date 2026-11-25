@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>RDV InBody · Magic Fit</title>
+<meta name="description" content="Réservez en ligne votre bilan InBody de 15 minutes au pôle santé Magic Fit Maintenon.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#111;--muted:#5d5f66;--line:#e4e4e7;--bg:#f6f6f4;--card:#fff;
+  --accent:#b0cb1f;--accent-ink:#111;--accent-soft:#f1f6d6;--accent-dark:#4a5a00;--ok:#127a3e;--bad:#c0262d;
+  --r:14px;
+}
+*{box-sizing:border-box;min-width:0}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 Inter,system-ui,sans-serif;overflow-x:clip}
+h1,h2,h3{font-family:Archivo,Inter,sans-serif;line-height:1.08;margin:0;text-wrap:balance}
+button,input,textarea{font:inherit;color:inherit}
+button{cursor:pointer}
+:focus-visible{outline:3px solid #111;outline-offset:2px}
+a{color:inherit}
+
+/* En-tête */
+.top{background:#fff;color:#111;border-bottom:5px solid var(--accent)}
+.top-in{max-width:1180px;margin:auto;padding:14px max(4vw,16px);display:flex;align-items:center;justify-content:space-between;gap:16px}
+.logo img{display:block;height:clamp(46px,8vw,78px);width:auto}
+.top a{font-size:15px;font-weight:600;color:#111;text-decoration:none;border:2px solid #111;border-radius:99px;padding:8px 14px;white-space:nowrap}
+.top a:hover{background:#111;color:#fff}
+
+.hero{max-width:1180px;margin:auto;padding:clamp(24px,4vw,48px) max(4vw,16px) 8px;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:24px;align-items:end}
+.hero h1{font-size:clamp(30px,4.6vw,48px);font-weight:800;font-style:italic;text-transform:uppercase;letter-spacing:-.01em}
+.hero h1 em{color:var(--accent-dark);font-style:inherit;background:linear-gradient(transparent 62%,var(--accent) 62%);color:#111}
+.hero p{color:var(--muted);margin:10px 0 0;max-width:60ch}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
+.chip{background:var(--card);border:1px solid var(--line);border-radius:99px;padding:6px 12px;font-size:14px;font-weight:500;white-space:nowrap}
+.chip.hot{background:var(--accent);border-color:var(--accent);color:#111;font-weight:700}
+.notice{max-width:1180px;margin:12px auto 0;padding:0 max(4vw,16px)}
+.notice div{background:#fff8e1;border:1px solid #f3dc8f;border-radius:10px;padding:10px 14px;font-size:15px}
+
+/* Agenda */
+main{max-width:1180px;margin:auto;padding:16px max(4vw,16px) 64px}
+.cal{background:var(--card);border:1px solid var(--line);border-top:5px solid var(--accent);border-radius:var(--r);box-shadow:0 1px 0 rgba(0,0,0,.03),0 12px 32px -20px rgba(0,0,0,.25)}
+.cal-head{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px 16px;border-bottom:1px solid var(--line)}
+.cal-head h2{font-size:19px}
+.nav{display:flex;gap:8px}
+.nav button{width:44px;height:44px;border-radius:10px;border:1px solid var(--line);background:#fff;font-size:20px}
+.nav button:disabled{opacity:.35;cursor:default}
+.week{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:0}
+.day{border-right:1px solid var(--line);padding:12px 8px 16px;min-height:260px}
+.day:last-child{border-right:0}
+.dname{text-align:center;margin-bottom:10px}
+.dname strong{display:block;text-transform:capitalize;font-size:15px}
+.dname span{color:var(--muted);font-size:13px}
+.times{display:flex;flex-direction:column;gap:6px}
+.t{border:0;background:var(--accent-soft);color:var(--accent-dark);font-weight:600;border-radius:8px;min-height:40px;font-size:15px;white-space:nowrap;transition:background .15s,color .15s}
+.t:hover{background:var(--accent);color:var(--accent-ink)}
+.none{color:#a1a1aa;text-align:center;font-size:14px;padding-top:8px}
+.more{display:block;margin:8px auto 0;border:0;background:none;color:var(--muted);font-size:14px;text-decoration:underline;min-height:36px}
+.state{padding:48px 16px;text-align:center;color:var(--muted)}
+.foot{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px;margin-top:20px;color:var(--muted);font-size:14px}
+.linkbtn{border:0;background:none;padding:0;text-decoration:underline;color:var(--ink);font-size:14px;min-height:32px}
+
+/* Préparation */
+.prep{margin-top:28px;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr));gap:12px}
+.prep div{background:var(--card);border:1px solid var(--line);border-left:5px solid var(--accent);border-radius:12px;padding:14px 16px;font-size:15px}
+.prep strong{display:block;margin-bottom:2px}
+.prep-title{margin-top:36px;font-size:22px}
+
+/* Fenêtre */
+dialog{border:0;border-radius:18px;padding:0;width:min(520px,calc(100vw - 24px));max-height:calc(100dvh - 24px);box-shadow:0 30px 80px -20px rgba(0,0,0,.5)}
+dialog::backdrop{background:rgba(17,17,17,.55)}
+.dlg-head{background:var(--ink);color:#fff;border-bottom:5px solid var(--accent);padding:18px 20px;display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
+.dlg-head h3{font-size:22px}
+.dlg-head p{margin:4px 0 0;color:#d4d4d8;font-size:15px}
+.x{border:0;background:rgba(255,255,255,.12);color:#fff;width:40px;height:40px;border-radius:10px;font-size:20px;flex:none}
+.dlg-body{padding:20px}
+.row2{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:12px}
+label{display:block;font-size:14px;font-weight:600;margin-bottom:12px}
+label span.opt{font-weight:400;color:var(--muted)}
+input[type=text],input[type=tel],input[type=email],textarea{display:block;width:100%;margin-top:4px;border:1px solid #d4d4d8;border-radius:10px;padding:11px 12px;font-size:16px;background:#fff}
+textarea{min-height:70px;resize:vertical}
+.check{display:flex;gap:10px;align-items:flex-start;font-weight:400;font-size:14px;color:var(--muted)}
+.check input{width:20px;height:20px;margin-top:2px;flex:none;accent-color:var(--accent)}
+.hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
+.btn{text-decoration:none;display:inline-flex;align-items:center;justify-content:center;gap:8px;width:100%;min-height:50px;border:0;border-radius:12px;background:var(--accent);color:var(--accent-ink);font-weight:700;font-size:17px}
+.btn:disabled{opacity:.6}
+.btn.ghost{background:#f4f4f5;color:var(--ink);font-weight:600}
+.btn.danger{background:var(--bad)}
+.msg{border-radius:10px;padding:10px 12px;font-size:15px;margin-bottom:12px}
+.msg.bad{background:#fdecec;color:var(--bad)}
+.msg.ok{background:#e8f6ee;color:var(--ok)}
+.code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:20px;font-weight:700;letter-spacing:.06em;background:#f4f4f5;border-radius:10px;padding:12px;text-align:center;margin:8px 0 4px;user-select:all}
+.done{text-align:center}
+.done .big{width:64px;height:64px;border-radius:50%;background:#e8f6ee;color:var(--ok);display:grid;place-items:center;margin:4px auto 12px;font-size:32px}
+.done h3{font-size:24px}
+.stack{display:grid;gap:10px;margin-top:16px}
+.small{font-size:14px;color:var(--muted)}
+
+@media (max-width:760px){
+  .hero{grid-template-columns:1fr}
+  .week{grid-template-columns:1fr}
+  .day{border-right:0;border-bottom:1px solid var(--line);min-height:0;padding:14px 16px}
+  .day:last-child{border-bottom:0}
+  .dname{text-align:left;display:flex;gap:8px;align-items:baseline}
+  .dname strong{display:inline}
+  .times{display:grid;grid-template-columns:repeat(auto-fill,minmax(76px,1fr))}
+  .none{text-align:left;padding-top:0}
+  .row2{grid-template-columns:1fr}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<header class="top"><div class="top-in">
+  <div class="logo"><img src="/logo-magicfit.png" alt="Magic Fit, vivez l'esprit fitness !" width="720" height="254"></div>
+  <a href="#annuler" id="openCancel">Annuler un rendez-vous</a>
+</div></header>
+
+<section class="hero">
+  <div>
+    <h1>Réservez votre bilan <em>InBody</em></h1>
+    <p>Analyse de la composition corporelle au pôle santé de Magic Fit Maintenon. Choisissez un créneau libre, il est aussitôt bloqué pour vous.</p>
+    <div class="chips">
+      <span class="chip hot">Bilan InBody</span>
+      <span class="chip" id="chipDur">15 min</span>
+      <span class="chip">Pôle santé · Magic Fit Maintenon</span>
+    </div>
+  </div>
+</section>
+<div class="notice" id="notice" hidden><div id="noticeText"></div></div>
+
+<main>
+  <div class="cal">
+    <div class="cal-head">
+      <h2 id="range">Créneaux disponibles</h2>
+      <div class="nav">
+        <button id="prev" aria-label="Semaine précédente">‹</button>
+        <button id="next" aria-label="Semaine suivante">›</button>
+      </div>
+    </div>
+    <div id="week" class="week" aria-live="polite"><div class="state" style="grid-column:1/-1">Chargement des créneaux…</div></div>
+  </div>
+  <div class="foot">
+    <span id="updated">Les créneaux se mettent à jour automatiquement.</span>
+    <button class="linkbtn" id="openCancel2">J'ai déjà un RDV et je veux l'annuler</button>
+  </div>
+
+  <h2 class="prep-title">Pour un bilan fiable</h2>
+  <div class="prep">
+    <div><strong>À jeun ou presque</strong>Évitez de manger dans les 2 à 3 heures qui précèdent.</div>
+    <div><strong>Pas de sport juste avant</strong>Faites la mesure avant votre séance, pas après.</div>
+    <div><strong>Passez aux toilettes</strong>Une vessie vide rend la mesure plus juste.</div>
+    <div><strong>Retirez le métal</strong>Bijoux, montre et objets métalliques dans les poches.</div>
+    <div><strong>Contre-indication</strong>Pas de mesure si vous portez un stimulateur cardiaque ou un dispositif médical implanté. En cas de grossesse, parlez-en à l'équipe.</div>
+  </div>
+</main>
+
+<dialog id="dlg" aria-labelledby="dlgTitle">
+  <div class="dlg-head">
+    <div><h3 id="dlgTitle">Confirmer le RDV</h3><p id="dlgSub"></p></div>
+    <button class="x" data-close aria-label="Fermer">×</button>
+  </div>
+  <div class="dlg-body" id="dlgBody"></div>
+</dialog>
+
+<template id="tplForm">
+  <form id="bookForm" novalidate>
+    <div class="msg bad" id="formErr" hidden></div>
+    <div class="row2">
+      <label>Prénom<input type="text" name="prenom" autocomplete="given-name" required maxlength="50"></label>
+      <label>Nom<input type="text" name="nom" autocomplete="family-name" required maxlength="50"></label>
+    </div>
+    <label>Téléphone<input type="tel" name="tel" autocomplete="tel" inputmode="tel" required maxlength="25" placeholder="06 12 34 56 78"></label>
+    <label>E-mail <span class="opt">(facultatif)</span><input type="email" name="email" autocomplete="email" maxlength="120"></label>
+    <label>Un mot pour le coach <span class="opt">(facultatif)</span><textarea name="note" maxlength="300" placeholder="Objectif, question…"></textarea></label>
+    <div class="hp" aria-hidden="true"><label>Site web<input type="text" name="website" tabindex="-1" autocomplete="off"></label></div>
+    <label class="check"><input type="checkbox" name="consent" required><span>J'accepte que Magic Fit utilise ces informations uniquement pour gérer ce rendez-vous.</span></label>
+    <button class="btn" type="submit" id="bookBtn">Réserver ce créneau</button>
+  </form>
+</template>
+
+<script>
+{
+const API = "/api";
+const $ = (s, r = document) => r.querySelector(s);
+const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+const dlg = $("#dlg");
+let from = null, data = null, slotMin = 15, expanded = new Set();
+
+const fmtDay = (d, opt) => new Date(d + "T12:00:00Z").toLocaleDateString("fr-FR", { timeZone: "UTC", ...opt });
+const longDate = (d) => fmtDay(d, { weekday: "long", day: "numeric", month: "long" });
+const addDays = (d, n) => { const x = new Date(d + "T12:00:00Z"); x.setUTCDate(x.getUTCDate() + n); return x.toISOString().slice(0, 10); };
+
+async function api(path, opts = {}) {
+  const res = await fetch(API + path, { ...opts, headers: { "content-type": "application/json" } });
+  const body = await res.json().catch(() => ({ error: "Réponse illisible du serveur." }));
+  if (!res.ok) throw Object.assign(new Error(body.error || "Erreur"), { status: res.status });
+  return body;
+}
+
+async function load(quiet) {
+  const week = $("#week");
+  if (!quiet) week.innerHTML = '<div class="state" style="grid-column:1/-1">Chargement des créneaux…</div>';
+  try {
+    data = await api(`/slots?days=7${from ? "&from=" + from : ""}`);
+    from = data.days[0]?.date || data.today;
+    slotMin = data.slotMinutes;
+    render();
+    $("#updated").textContent = "Mis à jour à " + new Date().toLocaleTimeString("fr-FR", { hour: "2-digit", minute: "2-digit" });
+  } catch (e) {
+    if (!quiet) week.innerHTML = `<div class="state" style="grid-column:1/-1">Impossible de charger les créneaux pour le moment. <br><button class="linkbtn" id="retry">Réessayer</button></div>`;
+    const r = $("#retry"); if (r) r.onclick = () => load();
+  }
+}
+
+function render() {
+  $("#chipDur").textContent = slotMin + " min";
+  if (data.message) { $("#notice").hidden = false; $("#noticeText").textContent = data.message; } else $("#notice").hidden = true;
+  const days = data.days;
+  if (!days.length) { $("#week").innerHTML = '<div class="state" style="grid-column:1/-1">Aucun créneau sur cette période.</div>'; return; }
+  $("#range").textContent = days.length > 1
+    ? `Du ${fmtDay(days[0].date, { day: "numeric", month: "short" })} au ${fmtDay(days[days.length - 1].date, { day: "numeric", month: "short" })}`
+    : longDate(days[0].date);
+  $("#prev").disabled = from <= data.today;
+  $("#next").disabled = !data.hasMore;
+  const total = days.reduce((n, d) => n + d.slots.length, 0);
+  $("#week").innerHTML = days.map((d) => {
+    const show = expanded.has(d.date) ? d.slots : d.slots.slice(0, 8);
+    return `<div class="day"><div class="dname"><strong>${esc(fmtDay(d.date, { weekday: "long" }))}</strong><span>${esc(fmtDay(d.date, { day: "numeric", month: "short" }))}</span></div>
+      <div class="times">${show.length ? show.map((t) => `<button class="t" data-d="${esc(d.date)}" data-t="${esc(t)}" aria-label="${esc(longDate(d.date))} à ${esc(t)}">${esc(t)}</button>`).join("") : '<div class="none">Aucun créneau</div>'}</div>
+      ${d.slots.length > 8 && !expanded.has(d.date) ? `<button class="more" data-more="${esc(d.date)}">+ ${d.slots.length - 8} créneaux</button>` : ""}</div>`;
+  }).join("") + (total ? "" : '<div class="state" style="grid-column:1/-1;border-top:1px solid var(--line)">Plus aucun créneau libre cette semaine. Regardez la semaine suivante ›</div>');
+}
+
+$("#week").addEventListener("click", (e) => {
+  const m = e.target.closest("[data-more]");
+  if (m) { expanded.add(m.dataset.more); render(); return; }
+  const b = e.target.closest(".t");
+  if (b) openBooking(b.dataset.d, b.dataset.t);
+});
+$("#prev").onclick = () => { from = addDays(from, -7); if (from < data.today) from = data.today; load(); };
+$("#next").onclick = () => { from = addDays(from, 7); load(); };
+
+function openDialog(title, sub, html) {
+  $("#dlgTitle").textContent = title;
+  $("#dlgSub").textContent = sub;
+  $("#dlgBody").innerHTML = html;
+  if (!dlg.open) dlg.showModal();
+}
+dlg.addEventListener("click", (e) => { if (e.target.closest("[data-close]") || e.target === dlg) dlg.close(); });
+
+function openBooking(date, time) {
+  openDialog("Confirmer le RDV", `Bilan InBody · ${longDate(date)} à ${time} · ${slotMin} min`, $("#tplForm").innerHTML);
+  const f = $("#bookForm");
+  f.prenom.focus();
+  f.onsubmit = async (e) => {
+    e.preventDefault();
+    const err = $("#formErr"); err.hidden = true;
+    const payload = Object.fromEntries(new FormData(f));
+    payload.consent = f.consent.checked;
+    if (!payload.prenom.trim() || !payload.nom.trim() || !payload.tel.trim()) { err.textContent = "Merci de remplir prénom, nom et téléphone."; err.hidden = false; return; }
+    if (!payload.consent) { err.textContent = "Merci de cocher la case d'accord."; err.hidden = false; return; }
+    const btn = $("#bookBtn"); btn.disabled = true; btn.textContent = "Réservation…";
+    try {
+      const r = await api("/book", { method: "POST", body: JSON.stringify({ ...payload, date, time }) });
+      showDone(r);
+      load(true);
+    } catch (ex) {
+      err.textContent = ex.message; err.hidden = false;
+      btn.disabled = false; btn.textContent = "Réserver ce créneau";
+      if (ex.status === 409) load(true);
+    }
+  };
+}
+
+function ics(r) {
+  const [y, mo, d] = r.date.split("-"), [h, mi] = r.time.split(":");
+  const start = `${y}${mo}${d}T${h}${mi}00`;
+  const endM = +h * 60 + +mi + r.slotMinutes;
+  const end = `${y}${mo}${d}T${String(Math.floor(endM / 60)).padStart(2, "0")}${String(endM % 60).padStart(2, "0")}00`;
+  const txt = ["BEGIN:VCALENDAR", "VERSION:2.0", "PRODID:-//Magic Fit//RDV InBody//FR", "BEGIN:VEVENT",
+    `UID:${r.code}@magicfit`, `DTSTAMP:${new Date().toISOString().replace(/[-:]/g, "").slice(0, 15)}Z`,
+    `DTSTART;TZID=Europe/Paris:${start}`, `DTEND;TZID=Europe/Paris:${end}`,
+    "SUMMARY:Bilan InBody - Magic Fit", "LOCATION:Magic Fit Maintenon",
+    `DESCRIPTION:Code d'annulation : ${r.code}`, "END:VEVENT", "END:VCALENDAR"].join("\r\n");
+  return URL.createObjectURL(new Blob([txt], { type: "text/calendar" }));
+}
+
+function showDone(r) {
+  const link = `${location.origin}${location.pathname}?annuler=${encodeURIComponent(r.code)}`;
+  openDialog("C'est réservé !", `${longDate(r.date)} à ${r.time}`, `
+    <div class="done">
+      <div class="big" aria-hidden="true">✓</div>
+      <h3>À bientôt ${esc(r.prenom)} !</h3>
+      <p class="small">Votre créneau n'est plus visible pour les autres adhérents.</p>
+    </div>
+    <p style="margin:16px 0 0;font-weight:600">Votre code d'annulation</p>
+    <div class="code">${esc(r.code)}</div>
+    <p class="small">Gardez-le (capture d'écran) : il permet d'annuler en ligne.</p>
+    <div class="stack">
+      <a class="btn" href="${ics(r)}" download="rdv-inbody-magicfit.ics">Ajouter à mon agenda</a>
+      <button class="btn ghost" id="copyLink">Copier le lien d'annulation</button>
+      <button class="btn ghost" data-close>Fermer</button>
+    </div>`);
+  $("#copyLink").onclick = async (e) => {
+    try { await navigator.clipboard.writeText(link); e.target.textContent = "Lien copié ✓"; }
+    catch { e.target.textContent = link; }
+  };
+}
+
+function openCancel(prefill) {
+  openDialog("Annuler un RDV", "Saisissez le code reçu à la réservation", `
+    <form id="cForm" novalidate>
+      <div class="msg bad" id="cErr" hidden></div>
+      <label>Code d'annulation<input type="text" name="code" autocapitalize="characters" placeholder="20261126-1015-K7P3QX" value="${esc(prefill || "")}"></label>
+      <div id="cInfo"></div>
+      <button class="btn" id="cBtn" type="submit">Rechercher mon RDV</button>
+    </form>
+    <p class="small" style="margin-top:12px">Code perdu ? Contactez l'accueil du club, l'équipe peut annuler pour vous.</p>`);
+  const f = $("#cForm"); let found = null;
+  f.code.addEventListener("input", () => { found = null; $("#cInfo").innerHTML = ""; $("#cBtn").textContent = "Rechercher mon RDV"; $("#cBtn").className = "btn"; });
+  f.onsubmit = async (e) => {
+    e.preventDefault();
+    const err = $("#cErr"); err.hidden = true;
+    const code = f.code.value.trim().toUpperCase();
+    const btn = $("#cBtn"); btn.disabled = true;
+    try {
+      if (!found) {
+        found = await api("/booking?code=" + encodeURIComponent(code));
+        $("#cInfo").innerHTML = `<div class="msg ok">RDV de ${esc(found.prenom)} : ${esc(longDate(found.date))} à ${esc(found.time)}</div>`;
+        btn.textContent = "Confirmer l'annulation"; btn.className = "btn danger";
+      } else {
+        await api("/cancel", { method: "POST", body: JSON.stringify({ code }) });
+        $("#dlgBody").innerHTML = `<div class="done"><div class="big" aria-hidden="true">✓</div><h3>RDV annulé</h3><p class="small">Le créneau est de nouveau disponible pour les autres adhérents.</p></div><div class="stack"><button class="btn ghost" data-close>Fermer</button></div>`;
+        history.replaceState(null, "", location.pathname);
+        load(true);
+      }
+    } catch (ex) { err.textContent = ex.message; err.hidden = false; found = null; }
+    btn.disabled = false;
+  };
+  if (prefill) f.requestSubmit();
+}
+$("#openCancel").onclick = (e) => { e.preventDefault(); openCancel(); };
+$("#openCancel2").onclick = () => openCancel();
+
+const qp = new URLSearchParams(location.search).get("annuler");
+load().then(() => { if (qp) openCancel(qp); else if (location.hash === "#annuler") openCancel(); });
+setInterval(() => { if (!dlg.open && document.visibilityState === "visible") load(true); }, 30000);
+}
+</script>
+</body>
+</html>

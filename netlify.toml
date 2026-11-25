@@ -1,6 +1,7 @@
+# Version "à plat" : tous les fichiers à la racine du dépôt, sans dossier
 [build]
-  publish = "public"
-  functions = "netlify/functions"
+  publish = "."
+  functions = "."
   command = "echo 'Site RDV InBody'"
 
 [functions]
@@ -17,3 +18,20 @@
   for = "/accueil.html"
   [headers.values]
     X-Robots-Tag = "noindex"
+
+# Ne pas servir le code et la config comme pages
+[[redirects]]
+  from = "/api.mjs"
+  to = "/"
+  status = 404
+  force = true
+[[redirects]]
+  from = "/package.json"
+  to = "/"
+  status = 404
+  force = true
+[[redirects]]
+  from = "/netlify.toml"
+  to = "/"
+  status = 404
+  force = true

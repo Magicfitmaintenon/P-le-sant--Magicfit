@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Accueil · RDV InBody</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#111;--muted:#5d5f66;--line:#e4e4e7;--bg:#f6f6f4;--card:#fff;--accent:#b0cb1f;--accent-soft:#f1f6d6;--ok:#127a3e;--bad:#c0262d}
+*{box-sizing:border-box;min-width:0}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 Inter,system-ui,sans-serif;overflow-x:clip}
+h1,h2,h3{font-family:Archivo,Inter,sans-serif;line-height:1.1;margin:0}
+button,input,select,textarea{font:inherit;color:inherit}
+button{cursor:pointer}
+:focus-visible{outline:3px solid #111;outline-offset:2px}
+.top{background:#fff;color:#111;border-bottom:5px solid var(--accent)}
+.top-in{max-width:1100px;margin:auto;padding:12px max(4vw,16px);display:flex;flex-wrap:wrap;align-items:center;gap:12px}
+.logo{display:flex;align-items:center;gap:12px;margin-right:auto}.logo img{height:56px;width:auto;display:block}
+.logo small{font:600 14px Inter,sans-serif;color:var(--muted)}
+.tabs{display:flex;gap:4px}
+.tab{border:0;background:transparent;color:#52525b;padding:10px 14px;border-radius:10px;min-height:44px;font-weight:600}
+.tab[aria-selected=true]{background:var(--accent);color:#111}
+.out{border:2px solid #111;background:transparent;color:#111;font-weight:600;border-radius:10px;min-height:44px;padding:0 12px}
+main{max-width:1100px;margin:auto;padding:20px max(4vw,16px) 60px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px}
+.bar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;padding:14px 16px;border-bottom:1px solid var(--line)}
+.bar h2{font-size:22px;margin-right:auto}.bar h2::first-letter{text-transform:uppercase}
+.b{border:1px solid var(--line);background:#fff;border-radius:10px;min-height:44px;padding:0 14px;font-weight:600;white-space:nowrap}
+.b.pri{background:var(--accent);border-color:var(--accent);color:#111}
+.b.red{color:var(--bad)}
+.b.sm{min-height:38px;padding:0 10px;font-size:14px}
+input[type=date],input[type=text],input[type=tel],input[type=email],input[type=password],input[type=number],select,textarea{border:1px solid #d4d4d8;border-radius:10px;padding:9px 11px;font-size:16px;background:#fff;min-height:44px}
+.stats{display:flex;flex-wrap:wrap;gap:20px;padding:12px 16px;border-bottom:1px solid var(--line);font-size:15px;color:var(--muted)}
+.stats strong{color:var(--ink);font-size:20px;font-family:Archivo,sans-serif;margin-right:4px}
+.list{list-style:none;margin:0;padding:0}
+.slot{display:grid;grid-template-columns:72px minmax(0,1fr) auto;gap:14px;align-items:center;padding:12px 16px;border-bottom:1px solid var(--line)}
+.slot:last-child{border-bottom:0}
+.hr{font-family:Archivo,sans-serif;font-weight:800;font-size:20px;white-space:nowrap}
+.who strong{font-size:17px}
+.who .meta{color:var(--muted);font-size:14px;overflow-wrap:anywhere}
+.who .meta a{color:var(--ink)}
+.who .note{font-size:14px;background:#fafafa;border-left:3px solid var(--accent);padding:4px 8px;margin-top:6px}
+.tag{display:inline-block;font-size:12px;font-weight:600;border-radius:99px;padding:2px 8px;margin-left:6px;vertical-align:2px}
+.tag.web{background:var(--accent-soft);color:#4a5a00}.tag.desk{background:#eef2ff;color:#3730a3}
+.slot.free .who{color:#a1a1aa}
+.slot.blocked{background:repeating-linear-gradient(135deg,#fafafa 0 10px,#f1f1f1 10px 20px)}
+.slot.booked .hr{color:#111;box-shadow:inset 0 -6px 0 var(--accent);justify-self:start}
+.acts{display:flex;flex-wrap:wrap;gap:6px;justify-content:flex-end}
+.empty{padding:40px 16px;text-align:center;color:var(--muted)}
+.closed{background:#fdecec;color:var(--bad);padding:10px 16px;border-bottom:1px solid var(--line);font-weight:600}
+.toggle{display:flex;align-items:center;gap:8px;font-size:15px;color:var(--muted)}
+.toggle input{width:20px;height:20px;accent-color:var(--accent)}
+.login{max-width:380px;margin:12vh auto;padding:28px}
+.login{border-top:5px solid var(--accent)}.login img{display:block;width:220px;max-width:100%;margin-bottom:16px}
+.login h1{font-size:26px;margin-bottom:6px}
+.login p{color:var(--muted);margin:0 0 18px}
+.login input{width:100%;margin-bottom:12px}
+.login .b{width:100%}
+.err{background:#fdecec;color:var(--bad);border-radius:10px;padding:10px 12px;margin-bottom:12px;font-size:15px}
+.okmsg{background:#e8f6ee;color:var(--ok);border-radius:10px;padding:10px 12px;font-size:15px}
+.set{padding:18px 16px;display:grid;gap:18px}
+.set h3{font-size:18px}
+.hours{display:grid;gap:8px}
+.hrow{display:grid;grid-template-columns:110px minmax(0,1fr);gap:10px;align-items:center}
+.hrow input{width:100%}
+.grid3{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,200px),1fr));gap:12px}
+.grid3 label,.set>label{display:grid;gap:4px;font-size:14px;font-weight:600}
+.hint{font-size:13px;color:var(--muted);font-weight:400}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chipx{display:inline-flex;align-items:center;gap:6px;background:#f4f4f5;border-radius:99px;padding:4px 6px 4px 12px;font-size:14px}
+.chipx button{border:0;background:#e4e4e7;border-radius:99px;width:26px;height:26px}
+dialog{border:0;border-radius:16px;padding:0;width:min(480px,calc(100vw - 24px))}
+dialog::backdrop{background:rgba(17,17,17,.5)}
+.dh{background:var(--ink);color:#fff;padding:16px 18px;border-bottom:5px solid var(--accent)}
+.dh p{margin:4px 0 0;color:#d4d4d8;font-size:15px}
+.db{padding:18px;display:grid;gap:10px}
+.db label{display:grid;gap:4px;font-size:14px;font-weight:600}
+.db .two{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.db .row{display:flex;gap:8px;margin-top:4px}.db .row .b{flex:1}
+@media(max-width:640px){
+  .slot{grid-template-columns:60px minmax(0,1fr)}
+  .acts{grid-column:1/-1;justify-content:flex-start}
+  .db .two{grid-template-columns:1fr}
+  .hrow{grid-template-columns:1fr}
+}
+@media print{
+  .top,.bar button,.bar input,.toggle,.acts,.tabs{display:none!important}
+  body{background:#fff}.card{border:0}.slot.free{display:none}
+}
+</style>
+</head>
+<body>
+<div id="app"></div>
+
+<dialog id="dlg">
+  <div class="dh"><h3 id="dT"></h3><p id="dS"></p></div>
+  <form class="db" id="dForm" novalidate>
+    <div class="err" id="dErr" hidden></div>
+    <div class="two">
+      <label>Prénom<input type="text" name="prenom" required maxlength="50"></label>
+      <label>Nom<input type="text" name="nom" required maxlength="50"></label>
+    </div>
+    <label>Téléphone <span class="hint">(facultatif à l'accueil)</span><input type="tel" name="tel" maxlength="25"></label>
+    <label>E-mail <span class="hint">(facultatif)</span><input type="email" name="email" maxlength="120"></label>
+    <label>Note<textarea name="note" maxlength="300" rows="2"></textarea></label>
+    <div class="row"><button type="button" class="b" id="dCancel">Annuler</button><button class="b pri" id="dOk">Réserver</button></div>
+  </form>
+</dialog>
+
+<script>
+{
+const $ = (s, r = document) => r.querySelector(s);
+const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+const app = $("#app");
+const DAYS = ["Dimanche", "Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi"];
+let pass = "";
+try { pass = sessionStorage.getItem("inbodyPass") || ""; } catch {}
+let tab = "planning", day = todayParis(), dayData = null, hideFree = false, settings = null;
+
+function todayParis() {
+  const p = Object.fromEntries(new Intl.DateTimeFormat("fr-FR", { timeZone: "Europe/Paris", year: "numeric", month: "2-digit", day: "2-digit" }).formatToParts(new Date()).map((x) => [x.type, x.value]));
+  return `${p.year}-${p.month}-${p.day}`;
+}
+const addDays = (d, n) => { const x = new Date(d + "T12:00:00Z"); x.setUTCDate(x.getUTCDate() + n); return x.toISOString().slice(0, 10); };
+const longDate = (d) => new Date(d + "T12:00:00Z").toLocaleDateString("fr-FR", { timeZone: "UTC", weekday: "long", day: "numeric", month: "long", year: "numeric" });
+
+async function api(path, opts = {}) {
+  const res = await fetch("/api/admin/" + path, { ...opts, headers: { "content-type": "application/json", authorization: "Bearer " + pass } });
+  const body = await res.json().catch(() => ({ error: "Réponse illisible du serveur." }));
+  if (res.status === 401) { logout(body.error); throw new Error(body.error); }
+  if (!res.ok) throw new Error(body.error || "Erreur");
+  return body;
+}
+
+function logout(msg) {
+  pass = ""; try { sessionStorage.removeItem("inbodyPass"); } catch {}
+  showLogin(msg);
+}
+
+function showLogin(msg) {
+  app.innerHTML = `<form class="card login" id="lf">
+    <img src="/logo-magicfit.png" alt="Magic Fit"><h1>Espace accueil</h1><p>RDV InBody · pôle santé Magic Fit</p>
+    ${msg ? `<div class="err">${esc(msg)}</div>` : ""}
+    <input type="password" name="p" placeholder="Mot de passe" autocomplete="current-password" required>
+    <button class="b pri">Se connecter</button></form>`;
+  $("#lf").onsubmit = async (e) => {
+    e.preventDefault(); pass = e.target.p.value;
+    try { await api("login"); try { sessionStorage.setItem("inbodyPass", pass); } catch {} shell(); } catch {}
+  };
+}
+
+function shell() {
+  app.innerHTML = `<header class="top"><div class="top-in">
+      <div class="logo"><img src="/logo-magicfit.png" alt="Magic Fit" width="720" height="254"><small>Accueil · RDV InBody</small></div>
+      <div class="tabs" role="tablist">
+        <button class="tab" role="tab" data-tab="planning">Planning</button>
+        <button class="tab" role="tab" data-tab="reglages">Réglages</button>
+      </div>
+      <button class="out" id="out">Déconnexion</button></div></header><main id="main"></main>`;
+  $("#out").onclick = () => logout();
+  app.querySelectorAll("[data-tab]").forEach((b) => b.onclick = () => { tab = b.dataset.tab; view(); });
+  view();
+}
+
+function view() {
+  app.querySelectorAll("[data-tab]").forEach((b) => b.setAttribute("aria-selected", b.dataset.tab === tab));
+  if (tab === "planning") planning(); else reglages();
+}
+
+// ---------- Planning du jour ----------
+async function planning(quiet) {
+  const main = $("#main"); if (!main) return;
+  if (!quiet) main.innerHTML = `<div class="card"><div class="empty">Chargement…</div></div>`;
+  try { dayData = await api("day?date=" + day); } catch (e) { if (!quiet) main.innerHTML = `<div class="card"><div class="empty">${esc(e.message)}</div></div>`; return; }
+  if (tab !== "planning") return;
+  const s = dayData.slots, booked = s.filter((x) => x.status === "réservé");
+  const shown = hideFree ? s.filter((x) => x.status !== "libre") : s;
+  main.innerHTML = `<div class="card">
+    <div class="bar">
+      <h2>${esc(longDate(day))}</h2>
+      <button class="b" id="pv" aria-label="Jour précédent">‹</button>
+      <button class="b" id="td">Aujourd'hui</button>
+      <button class="b" id="nx" aria-label="Jour suivant">›</button>
+      <input type="date" id="dp" value="${esc(day)}" aria-label="Choisir une date">
+      <button class="b" id="pr">Imprimer</button>
+    </div>
+    ${dayData.closed ? `<div class="closed">Journée fermée aux réservations en ligne (modifiable dans Réglages).</div>` : ""}
+    <div class="stats">
+      <span><strong>${booked.length}</strong>RDV</span>
+      <span><strong>${s.filter((x) => x.status === "libre").length}</strong>libres</span>
+      <span><strong>${s.filter((x) => x.status === "bloqué").length}</strong>bloqués</span>
+      <label class="toggle" style="margin-left:auto"><input type="checkbox" id="hf" ${hideFree ? "checked" : ""}>Masquer les libres</label>
+    </div>
+    ${shown.length ? `<ul class="list">${shown.map(row).join("")}</ul>` : `<div class="empty">${s.length ? "Aucun RDV ce jour-là." : "Pas de créneaux ce jour-là (club fermé ou horaires vides)."}</div>`}
+  </div>`;
+  $("#pv").onclick = () => { day = addDays(day, -1); planning(); };
+  $("#nx").onclick = () => { day = addDays(day, 1); planning(); };
+  $("#td").onclick = () => { day = todayParis(); planning(); };
+  $("#dp").onchange = (e) => { if (e.target.value) { day = e.target.value; planning(); } };
+  $("#pr").onclick = () => { try { window.print(); } catch {} };
+  $("#hf").onchange = (e) => { hideFree = e.target.checked; planning(true); };
+  main.querySelector(".list")?.addEventListener("click", onAction);
+}
+
+function row(x) {
+  if (x.status === "libre") return `<li class="slot free"><span class="hr">${esc(x.time)}</span><span class="who">Libre</span>
+    <span class="acts"><button class="b sm" data-a="book" data-t="${esc(x.time)}">Réserver pour un adhérent</button><button class="b sm" data-a="block" data-t="${esc(x.time)}">Bloquer</button></span></li>`;
+  if (x.status === "bloqué") return `<li class="slot blocked"><span class="hr">${esc(x.time)}</span><span class="who"><strong>Bloqué</strong><div class="meta">Indisponible en ligne</div></span>
+    <span class="acts"><button class="b sm" data-a="unblock" data-t="${esc(x.time)}">Débloquer</button></span></li>`;
+  const b = x.booking, tel = (b.tel || "").replace(/[^\d+]/g, "");
+  return `<li class="slot booked"><span class="hr">${esc(x.time)}</span>
+    <span class="who"><strong>${esc(b.prenom)} ${esc(b.nom)}</strong><span class="tag ${b.source === "accueil" ? "desk" : "web"}">${b.source === "accueil" ? "Accueil" : "En ligne"}</span>
+      <div class="meta">${tel ? `<a href="tel:${esc(tel)}">${esc(b.tel)}</a>` : "Pas de téléphone"}${b.email ? ` · ${esc(b.email)}` : ""}</div>
+      ${b.note ? `<div class="note">${esc(b.note)}</div>` : ""}</span>
+    <span class="acts"><button class="b sm red" data-a="cancel" data-t="${esc(x.time)}" data-n="${esc(b.prenom + " " + b.nom)}">Annuler le RDV</button></span></li>`;
+}
+
+async function onAction(e) {
+  const btn = e.target.closest("[data-a]"); if (!btn) return;
+  const a = btn.dataset.a, time = btn.dataset.t;
+  if (a === "book") return openBook(time);
+  if (a === "cancel") {
+    if (btn.dataset.sure !== "1") { btn.dataset.sure = "1"; btn.textContent = "Confirmer l'annulation ?"; setTimeout(() => { if (btn.isConnected) { btn.dataset.sure = ""; btn.textContent = "Annuler le RDV"; } }, 4000); return; }
+  }
+  btn.disabled = true;
+  try { await api(a, { method: "POST", body: JSON.stringify({ date: day, time }) }); } catch (ex) { alertBar(ex.message); }
+  planning(true);
+}
+
+function alertBar(m) {
+  const bar = document.createElement("div"); bar.className = "err"; bar.style.margin = "0 0 12px"; bar.textContent = m;
+  $("#main").prepend(bar); setTimeout(() => bar.remove(), 5000);
+}
+
+const dlg = $("#dlg"), dForm = $("#dForm");
+function openBook(time) {
+  dForm.reset(); $("#dErr").hidden = true;
+  $("#dT").textContent = "Réserver pour un adhérent";
+  $("#dS").textContent = `${longDate(day)} à ${time}`;
+  dForm.dataset.t = time; dlg.showModal(); dForm.prenom.focus();
+}
+$("#dCancel").onclick = () => dlg.close();
+dForm.onsubmit = async (e) => {
+  e.preventDefault();
+  const p = Object.fromEntries(new FormData(dForm));
+  const ok = $("#dOk"); ok.disabled = true;
+  try {
+    await api("book", { method: "POST", body: JSON.stringify({ ...p, date: day, time: dForm.dataset.t }) });
+    dlg.close(); planning(true);
+  } catch (ex) { $("#dErr").textContent = ex.message; $("#dErr").hidden = false; }
+  ok.disabled = false;
+};
+
+// ---------- Réglages ----------
+async function reglages() {
+  const main = $("#main");
+  main.innerHTML = `<div class="card"><div class="empty">Chargement…</div></div>`;
+  try { settings = await api("settings"); } catch (e) { main.innerHTML = `<div class="card"><div class="empty">${esc(e.message)}</div></div>`; return; }
+  const order = [1, 2, 3, 4, 5, 6, 0];
+  main.innerHTML = `<form class="card" id="sf">
+    <div class="bar"><h2>Réglages des RDV InBody</h2><button class="b pri">Enregistrer</button></div>
+    <div class="set">
+      <div id="sMsg"></div>
+      <div><h3>Horaires des RDV</h3><p class="hint">Une ou plusieurs plages par jour, séparées par une virgule. Ex. : 10:00-12:00, 14:00-19:00. Laisser vide = pas de RDV ce jour-là.</p>
+        <div class="hours">${order.map((d) => `<div class="hrow"><strong>${DAYS[d]}</strong><input type="text" name="h${d}" value="${esc((settings.hours[d] || []).join(", "))}" placeholder="Fermé"></div>`).join("")}</div></div>
+      <div class="grid3">
+        <label>Durée d'un RDV<select name="slotMinutes">${[10, 15, 20, 30].map((m) => `<option value="${m}" ${m === settings.slotMinutes ? "selected" : ""}>${m} min</option>`).join("")}</select></label>
+        <label>Réservable jusqu'à<span class="hint">nombre de jours à l'avance</span><input type="number" name="horizonDays" min="1" max="90" value="${settings.horizonDays}"></label>
+        <label>Délai minimum<span class="hint">en minutes avant le RDV</span><input type="number" name="minNoticeMinutes" min="0" max="2880" step="15" value="${settings.minNoticeMinutes}"></label>
+      </div>
+      <div><h3>Jours fermés</h3><p class="hint">Vacances, jours fériés, absence du coach : aucun créneau proposé en ligne.</p>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;margin:8px 0"><input type="date" id="cd"><button type="button" class="b" id="addCd">Ajouter</button></div>
+        <div class="chips" id="cds"></div></div>
+      <label>Message affiché aux adhérents <span class="hint">(facultatif, ex. « Pas de RDV pendant les vacances de Noël »)</span><textarea name="message" maxlength="280" rows="2">${esc(settings.message || "")}</textarea></label>
+      <p class="hint">Changer les horaires ou la durée n'annule pas les RDV déjà pris : ils restent visibles dans le planning.</p>
+    </div></form>`;
+  let closed = [...settings.closedDays];
+  const drawCd = () => {
+    const today = todayParis();
+    $("#cds").innerHTML = closed.filter((d) => d >= today).map((d) => `<span class="chipx">${esc(longDate(d))}<button type="button" data-rm="${esc(d)}" aria-label="Retirer">×</button></span>`).join("") || `<span class="hint">Aucun jour fermé à venir.</span>`;
+  };
+  drawCd();
+  $("#addCd").onclick = () => { const v = $("#cd").value; if (v && !closed.includes(v)) { closed.push(v); closed.sort(); drawCd(); } };
+  $("#cds").onclick = (e) => { const b = e.target.closest("[data-rm]"); if (b) { closed = closed.filter((d) => d !== b.dataset.rm); drawCd(); } };
+  $("#sf").onsubmit = async (e) => {
+    e.preventDefault(); const f = e.target, msg = $("#sMsg");
+    const hours = {}; const bad = [];
+    for (let d = 0; d < 7; d++) {
+      const parts = f["h" + d].value.split(",").map((s) => s.replace(/\s+/g, "").replace(/h/gi, ":").replace(/:(?=-|$)/g, ":00")).filter(Boolean);
+      hours[d] = parts.map((p) => p.split("-").map((t) => t.padStart(5, "0")).join("-"));
+      for (const p of hours[d]) if (!/^\d{2}:\d{2}-\d{2}:\d{2}$/.test(p) || p.slice(0, 5) >= p.slice(6)) bad.push(DAYS[d]);
+    }
+    if (bad.length) { msg.innerHTML = `<div class="err">Plage horaire mal écrite : ${esc([...new Set(bad)].join(", "))}. Format attendu : 10:00-12:00</div>`; return; }
+    try {
+      settings = await api("settings", { method: "POST", body: JSON.stringify({ settings: {
+        hours, slotMinutes: +f.slotMinutes.value, horizonDays: +f.horizonDays.value,
+        minNoticeMinutes: +f.minNoticeMinutes.value, closedDays: closed, message: f.message.value } }) });
+      msg.innerHTML = `<div class="okmsg">Réglages enregistrés. La page adhérents est à jour.</div>`;
+    } catch (ex) { msg.innerHTML = `<div class="err">${esc(ex.message)}</div>`; }
+  };
+}
+
+if (pass) api("login").then(shell).catch(() => {}); else showLogin();
+setInterval(() => { if (tab === "planning" && pass && !dlg.open && document.visibilityState === "visible") planning(true); }, 30000);
+}
+</script>
+</body>
+</html>
